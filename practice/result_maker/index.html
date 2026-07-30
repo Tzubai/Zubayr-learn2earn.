@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Result Maker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background: linear-gradient(135deg, #1e1b4b, #312e81, #1e3a5f);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #e0e7ff;
+      padding: 3rem 1.5rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 520px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(99,102,241,0.25);
+      color: #a5b4fc;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(99,102,241,0.4);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+    }
+
+    .subtitle {
+      font-size: 0.88rem;
+      color: #818cf8;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Name Field ── */
+    .name-field {
+      margin-bottom: 1.4rem;
+    }
+
+    .name-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .name-field input {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .name-field input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.25);
+    }
+
+    .name-field input::placeholder { color: #475569; }
+
+    /* ── Score Grid ── */
+    .score-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .score-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    .score-field input {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .score-field input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.25);
+    }
+
+    .score-field input::placeholder { color: #475569; }
+
+    /* ── Button ── */
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.03em;
+    }
+
+    button:hover  { opacity: 0.88; }
+    button:active { transform: scale(0.98); }
+
+    /* ── Result Section ── */
+    .result-section {
+      margin-top: 1.8rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.6rem;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .student-name-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .final-grade-badge {
+      font-size: 1.5rem;
+      font-weight: 900;
+      background: rgba(99,102,241,0.2);
+      border: 2px solid rgba(99,102,241,0.5);
+      border-radius: 10px;
+      padding: 0.3rem 0.8rem;
+      color: #c7d2fe;
+    }
+
+    /* ── Subject Rows ── */
+    .subject-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 0.65rem 1rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .subject-row .sub-name {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .subject-row .sub-right {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .subject-row .sub-score {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .grade-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .grade-A { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .grade-B { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    .grade-C { background: rgba(234,179,8,0.2);  color: #fde047; }
+    .grade-D { background: rgba(249,115,22,0.2); color: #fdba74; }
+    .grade-F { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+
+    /* ── Average Bar ── */
+    .average-row {
+      margin-top: 1rem;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .average-row .avg-label {
+      font-size: 0.85rem;
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+
+    .average-row .avg-val {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #c7d2fe;
+    }
+
+    .remark {
+      margin-top: 0.6rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #818cf8;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">IHS CHALLENGE</span>
+    <h1>Auto Grader</h1>
+    <p class="subtitle">Enter a student's scores to get instant grades</p>
+
+    <form method="POST" action="/">
+      <!-- Student's name -->
+      <div class="name-field">
+        <label>Student Name</label>
+        <input type="text" name="name" placeholder="e.g. Amina Yusuf" required/>
+      </div>
+
+      <!-- Scores for 4 subjects -->
+      <div class="score-grid">
+        <div class="score-field">
+          <label>Mathematics</label>
+          <input type="number" name="math" min="0" max="100" step="0.1" placeholder="0–100" required/>
+        </div>
+        <div class="score-field">
+          <label>English</label>
+          <input type="number" name="english" min="0" max="100" step="0.1" placeholder="0–100" required/>
+        </div>
+        <div class="score-field">
+          <label>Science</label>
+          <input type="number" name="science" min="0" max="100" step="0.1" placeholder="0–100" required/>
+        </div>
+        <div class="score-field">
+          <label>History</label>
+          <input type="number" name="history" min="0" max="100" step="0.1" placeholder="0–100" required/>
+        </div>
+      </div>
+
+      <button type="submit">Calculate Grades →</button>
+    </form>
+
+    <!-- Results — only shown after form is submitted -->
+    {{if .HasResult}}
+    <div class="result-section">
+      <div class="result-header">
+        <div class="student-name-display">📋 {{.StudentName}}</div>
+        <div class="final-grade-badge">{{.FinalGrade}}</div>
+      </div>
+
+      <!-- One row per subject -->
+      {{range .Subjects}}
+      <div class="subject-row">
+        <span class="sub-name">{{.Name}}</span>
+        <div class="sub-right">
+          <span class="sub-score">{{printf "%.1f" .Score}}</span>
+          <span class="grade-tag grade-{{.Grade}}">{{.Grade}}</span>
+        </div>
+      </div>
+      {{end}}
+
+      <!-- Average and final verdict -->
+      <div class="average-row">
+        <span class="avg-label">Average Score</span>
+        <span class="avg-val">{{printf "%.1f" .Average}} / 100</span>
+      </div>
+      <p class="remark">{{.FinalRemark}}</p>
+    </div>
+    {{end}}
+  </div>
+</body>
+</html>

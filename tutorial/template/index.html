@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>Ascii-Art-Generator</head>
+	<body>
+		<form action="/ascii-art" method="POST">
+			<textarea placeholder="Enter your text" name="text"></textarea>
+			<select name="banner">
+				<option value="standard">star boy</option>
+				<option value="shadow">shaw boy</option>
+				<option value="thinkertoy">thinker boy</option>
+			</select>
+			<button>Submit</button>
+		</form>
+		<pre>{{.}}</pre>
+	</body>
+</html>

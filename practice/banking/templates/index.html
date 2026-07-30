@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Dashboard</title>
+    <style>
+        body { font-family: Arial; background:#f5f7fb; margin:0; }
+        .wrap { width: 900px; margin: 30px auto; }
+
+        .card {
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            margin-bottom:20px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin-bottom:10px; }
+
+        select, input {
+            width:100%;
+            padding:10px;
+            margin:5px 0 15px;
+        }
+
+        button {
+            width:100%;
+            padding:12px;
+            background:#1e88e5;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:6px;
+        }
+
+        button:hover { background:#1565c0; }
+
+        table {
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th, td {
+            padding:10px;
+            border-bottom:1px solid #ddd;
+            text-align:left;
+        }
+
+        .success { color:green; }
+        .error { color:red; }
+
+        .grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <div class="card">
+        <h1>🏦 Banking Dashboard</h1>
+
+        {{if .Message}}
+            <p class="{{if .IsError}}error{{else}}success{{end}}">
+                {{.Message}}
+            </p>
+        {{end}}
+
+        <form method="POST">
+            <label>Sender</label>
+            <select name="sender">
+                {{range .Accounts}}
+                    <option value="{{.Name}}">{{.Name}} ({{.Balance}})</option>
+                {{end}}
+            </select>
+
+            <label>Receiver</label>
+            <select name="receiver">
+                {{range .Accounts}}
+                    <option value="{{.Name}}">{{.Name}}</option>
+                {{end}}
+            </select>
+
+            <label>Amount</label>
+            <input type="number" name="amount" step="0.01">
+
+            <button>Transfer</button>
+        </form>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>Accounts</h2>
+            <table>
+                {{range .Accounts}}
+                <tr>
+                    <td>{{.Name}}</td>
+                    <td>${{printf "%.2f" .Balance}}</td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Transactions</h2>
+            <table>
+                <tr>
+                    <th>Sender</th>
+                    <th>Receiver</th>
+                    <th>Amount</th>
+                </tr>
+
+                {{range .Transactions}}
+                <tr>
+                    <td>{{.Sender}}</td>
+                    <td>{{.Receiver}}</td>
+                    <td>${{printf "%.2f" .Amount}}</td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

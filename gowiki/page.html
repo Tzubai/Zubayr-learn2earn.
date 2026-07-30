@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <h2>Welcome to Ascii-Art-Generator</h2>
+    <form action="/" method="POST">
+    <textarea name="text" placeholder="Enter text here..."></textarea>
+    <br></br>
+    <h4>Choose a font:</h4>
+    <select name="banner">
+        <option value="standard">standard</option>
+        <option value="shadow">shadow</option>
+        <option value="thinkertoy">thinkertoy</option>
+    </select>
+    <br></br>
+    <button>Generate</button>
+        <!-- <label for="st">standard</label>
+        <input type="radio" name="banner"  id="st" value="standard" checked>
+        <label for="sh">shadow</label>
+        <input type="radio" name="banner" id="sh" value="shadow">
+        <label for="th">thinkertoy</label>
+        <input type="radio" name="banner" id="th" value="thinkertoy">
+         <label for="th">labalaba</label>
+        <input type="radio" name="banner" id="th" value="labalaba">
+        <br>
+        <button>Generate</button> -->
+    </form>
+    <div></div>
+    <p><h2>Generated Ascii-Art</h2><br><h4><pre>{{.}}</pre></h4></p>
+</body>
+</html>
