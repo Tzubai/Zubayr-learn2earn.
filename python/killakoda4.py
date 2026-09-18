@@ -158,25 +158,33 @@ random_number = random.randint(1, 100)
 #         break
 
 
-print("Welcome to the number counter.\n")
-num = input("Enter digits of your choice: ")
+# print("Welcome to the number counter.\n")
+# num = input("Enter digits of your choice: ")
 
-while not num.isdigit():
-    print("Ops!! Numbers only!")
-    num = input("Enter digits only: ")
+# while not num.isdigit():
+#     print("Ops!! Numbers only!")
+#     num = input("Enter digits only: ")
 
-count = 0
+# count = 0
 
-for digit in num:
-    count += 1
+# for digit in num:
+#     count += 1
 
-print(count)
+# print(count)
 
 
 
-# i = 0
-# while i < 6:
-#     i += 1
-#     if i == 3:
-#         continue
-#     print(i)
+
+word = input("Enter a word: ")
+
+reverse = ""
+
+for character in word:
+    reverse = reverse
+
+print("Reverse:", reverse)
+
+if word == reverse:
+    print("This is a palindrome!")
+else:
+    print("This is not a palindrome.")
