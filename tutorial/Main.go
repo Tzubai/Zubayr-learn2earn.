@@ -1,22 +1,23 @@
 package main
 
-import(
-	"net/http"
+import (
 	"fmt"
 	"html/template"
+	"net/http"
 	"os"
 	"strings"
 )
+
 var tmpl *template.Template
 var err error
 
-func main(){
+func main() {
 	http.HandleFunc("/", Get)
 	http.HandleFunc("/ascii-art", Post)
 	fmt.Println("Server running at:http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }
-func Get(w http.ResponseWriter, r *http.Request){
+func Get(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return
@@ -32,7 +33,7 @@ func Get(w http.ResponseWriter, r *http.Request){
 	}
 	tmpl.Execute(w, nil)
 }
-func Post(w http.ResponseWriter, r *http.Request){
+func Post(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/ascii-art" {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return
@@ -54,28 +55,28 @@ func Post(w http.ResponseWriter, r *http.Request){
 	}
 	tmpl.Execute(w, final)
 }
-func ascii(text string, banner string)(string, error) {
-	font,err := os.ReadFile(banner + ".txt")
+func ascii(text string, banner string) (string, error) {
+	font, err := os.ReadFile(banner + ".txt")
 	if err != nil {
-		return	"", err
+		return "", err
 	}
 	replaced := strings.ReplaceAll(string(font), "\r\n", "\n")
 	splitted := strings.Split(replaced, "\n")
-	
+
 	str := strings.Split(text, "\r\n")
-	
+
 	var msg strings.Builder
-	for j,ch := range str{
+	for j, ch := range str {
 		if j == 0 && ch == "" {
 			continue
 		}
-		if ch == ""{
+		if ch == "" {
 			msg.WriteString("\n")
 			continue
 		}
-		for i:= 0; i < 8; i++ {
+		for i := 0; i < 8; i++ {
 			for _, word := range ch {
-				formula := int(word - 32)*9+1+i
+				formula := int(word-32)*9 + 1 + i
 				msg.WriteString(splitted[formula])
 			}
 			msg.WriteString("\n")
