@@ -1,6 +1,8 @@
 import time
 import random
-random_number = random.randint(1, 100)
+# random_number = random.randint(1, 100)
+# import random
+# random_number = random.randint(1, 20)
 
 # i = 1
 # while i < 3:
@@ -175,16 +177,65 @@ random_number = random.randint(1, 100)
 
 
 
-word = input("Enter a word: ")
+# word = input("Enter a word: ")
 
-reverse = ""
+# reverse = ""
 
-for character in word:
-    reverse = reverse
+# for character in word:
+#     reverse = reverse
 
-print("Reverse:", reverse)
+# print("Reverse:", reverse)
 
-if word == reverse:
-    print("This is a palindrome!")
+# if word == reverse:
+#     print("This is a palindrome!")
+# else:
+#     print("This is not a palindrome.")
+
+
+
+
+name = input("What is your name?: ")
+print("Welcome", name)
+
+starting_number = int(input("Enter the starting number: "))
+ending_number = int(input("Enter the ending number: "))
+
+random_number = random.randint(starting_number, ending_number)
+
+trial_times = int(input("How many guesses would you like?: "))
+tries = 0
+guess = int(input("Guess the number: "))
+if guess > random_number:
+        print("Number too high!")
+
+if guess < random_number:
+    print("Number too low!")
+
+while guess != random_number:
+
+    while True:
+        try:
+            guess = int(input("Guess the number again: "))
+            break
+        except ValueError:
+            print("Only numbers are allowed. Try again.")
+
+    if guess > random_number:
+        print("Number too high!")
+
+    if guess < random_number:
+        print("Number too low!")
+
+    if tries == trial_times:
+        print("Ops!!, You didn't guess the number. The number was:", random_number )
+        break
+    tries += 1
+
+print("Correct!")
+
+remaining = trial_times - tries
+
+if tries == 1:
+    print(f"You guessed correctly in {tries} try!!!. {remaining} tries remaining")
 else:
-    print("This is not a palindrome.")
+    print(f"You guessed correctly in {tries} tries. {remaining} tries remaining")
