@@ -1,6 +1,8 @@
 import time
 import random
+import sys
 # random_number = random.randint(1, 100)
+# print(random_number)
 # import random
 # random_number = random.randint(1, 20)
 
@@ -195,47 +197,83 @@ import random
 
 
 name = input("What is your name?: ")
+if name == "":
+    name = "Player"
+
 print("Welcome", name)
 
-starting_number = int(input("Enter the starting number: "))
-ending_number = int(input("Enter the ending number: "))
+while True:
+    try:
+        starting_number = int(input("Enter the starting number: "))
+        ending_number = int(input("Enter the ending number: "))
+
+        if (ending_number < starting_number) or (ending_number == starting_number):
+            print("The starting number cannot be greater than the ending number.")
+            print("Please try again.")
+            continue
+        break
+    except ValueError:
+        print("Only whole numbers are allowed. Please try again.")
 
 random_number = random.randint(starting_number, ending_number)
+print(random_number)
 
-trial_times = int(input("How many guesses would you like?: "))
 tries = 0
-guess = int(input("Guess the number: "))
-if guess > random_number:
-        print("Number too high!")
+remaining = 0
+trial_times = 0
 
-if guess < random_number:
-    print("Number too low!")
+while True:
+    try:
+        trial_times = int(input("How many guesses would you like?: "))
+        if trial_times <= 0:
+            print("You must allow at least 1 guess.")
+            continue
 
-while guess != random_number:
+        break
+    except ValueError:
+        print("Only whole numbers are allowed. Please try again.")
 
+for i in range(trial_times):
     while True:
         try:
-            guess = int(input("Guess the number again: "))
+            guess = int(input(
+                f"Guess the number ({starting_number}-{ending_number}): "
+                ))
+
+            if guess < starting_number or guess > ending_number:
+                print(
+                    f"Please enter a number between "
+                    f"{starting_number} and {ending_number}."
+                )
+                continue
             break
+
         except ValueError:
-            print("Only numbers are allowed. Try again.")
+                   print("Only whole numbers are allowed. Try again.")
 
-    if guess > random_number:
-        print("Number too high!")
-
-    if guess < random_number:
-        print("Number too low!")
-
-    if tries == trial_times:
-        print("Ops!!, You didn't guess the number. The number was:", random_number )
-        break
     tries += 1
 
-print("Correct!")
+    remaining = trial_times - tries
+    if guess == random_number:
+        print("Correct!")
 
-remaining = trial_times - tries
+        if tries == 1:
+            print(f"You guessed correctly in {tries} try!!!. {remaining} tries remaining")
+        else:
+            print(f"You guessed correctly in {tries} tries. {remaining} tries remaining")
+        break
+    elif guess > random_number:
+        print("Number too high!")
+    else:
+        print("Number too low!")
 
-if tries == 1:
-    print(f"You guessed correctly in {tries} try!!!. {remaining} tries remaining")
-else:
-    print(f"You guessed correctly in {tries} tries. {remaining} tries remaining")
+    remaining = trial_times - tries
+
+    if remaining == 1:
+        print("You have 1 try remaining.")
+    elif remaining > 1:
+        print(f"You have {remaining} tries remaining.")
+
+if guess != random_number:
+    print("Ops!!, You didn't guess the number. The number was:", random_number)
+
