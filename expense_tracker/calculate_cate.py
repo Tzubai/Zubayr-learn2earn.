@@ -1,5 +1,4 @@
-import subprocess
-import time
+from packages import *
 
 def calculate_by_category(expenses):
 
@@ -41,7 +40,7 @@ def calculate_by_category(expenses):
         f"Total spending on {calculate_category}: "
         f"₦{total:,.2f}"
     )
-    input("Press enter to continue.")
+    input("Press enter to return options.")
     subprocess.run(["clear"])
     time.sleep(1)
 

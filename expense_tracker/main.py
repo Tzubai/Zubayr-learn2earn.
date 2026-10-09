@@ -1,41 +1,7 @@
-import json
-import time
-import sys
-
-from add_expense import add_expense, ispunctuation
-from view_expenses import view_expenses
-from calculate_total import calculate_total
-from calculate_cate import calculate_by_category
-from delete_expense import delete_expense
-from exit_program import exit_program
-
-
+from packages import *
 
 def main():
     try:
-        def save_expenses():
-            with open("expenses.json", "w") as file:
-                json.dump(expenses, file, indent=4)
-
-
-        def load_expenses():
-            try:
-                with open("expenses.json", "r") as file:
-                    data = json.load(file)
-
-                    if not isinstance(data, list):
-                        print("Invalid JSON structure. Expenses must be a list.")
-                        return []
-                    return data
-
-            except FileNotFoundError:
-                print("No json file")
-                return []
-
-            except json.JSONDecodeError:
-                print("The JSON file is corrupted.")
-                return []
-
         expenses = load_expenses()
 
         pr = (
@@ -67,31 +33,31 @@ def main():
                 if choice < 1 or choice > 6:
                     print("That number does not exist in the options.")
                     continue
+                if choice == 6:
+                    exit_program()
+                else:
+                    subprocess.run(["clear"])
+                    time.sleep(0.5)
 
             except ValueError:
                 print("Please enter a number.")
                 continue
-
-            if choice == 1:
-                add_expense(expenses, save_expenses, view_expenses, le, pr)
-
-            elif choice == 2:
-                view_expenses(expenses, le, pr)
-
-            elif choice == 3:
-                calculate_total(expenses)
-
-            elif choice == 4:
-                calculate_by_category(expenses)
-
-            elif choice == 5:
-                delete_expense(expenses, pr, le, save_expenses, view_expenses)
-
-            elif choice == 6:
-                exit_program()
+            match choice:
+                case 1:
+                    add_expense(expenses)
+                case 2:
+                    view_expenses(expenses, )
+                case 3:
+                    calculate_total(expenses)
+                case 4:
+                    calculate_by_category(expenses)
+                case 5:
+                    delete_expense(expenses)
+                case 6:
+                    exit_program()
 
     except (KeyboardInterrupt, EOFError):
-        sys.exit()
+        return
 
-# if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    main()

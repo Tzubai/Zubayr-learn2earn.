@@ -1,18 +1,14 @@
-import subprocess
-import time
+from packages import *
 
-def view_expenses(expenses, le, some):
+def view_expenses(expenses):
 
     if not expenses:
         print("No expenses recorded yet.")
         return
 
-    print("=" * le)
-
-    print(some)
-
-    print("=" * le)
-
+    print_header_line()
+    print_header()
+    print_header_line()
 
     for i, expense in enumerate(expenses, start=1):
         print(
@@ -22,7 +18,7 @@ def view_expenses(expenses, le, some):
             f"{expense['description']:<20}"
         )
 
-    print("=" * le)
+    print_header_line()
 
     input("Press enter to continue.")
     subprocess.run(["clear"])

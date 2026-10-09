@@ -1,19 +1,15 @@
-import subprocess
-import time
+from packages import *
 
-def delete_expense(expenses, pr, le, save_expenses, view_expenses):
+def delete_expense(expenses):
 
     if not expenses:
         print("No expenses available yet.")
         return
 
     print("Available expenses.")
-    print("=" * le)
-
-    print(pr)
-
-    print("=" * le)
-
+    print_header_line()
+    print_header()
+    print_header_line()
 
     for i, expense in enumerate(expenses, start=1):
         print(
@@ -22,9 +18,7 @@ def delete_expense(expenses, pr, le, save_expenses, view_expenses):
             f"{expense['category']:<20}"
             f"{expense['description']:<20}"
         )
-
-    print("=" * le)
-
+    print_header_line()
 
     while True:
 
@@ -35,8 +29,6 @@ def delete_expense(expenses, pr, le, save_expenses, view_expenses):
         if delete == "back":
             time.sleep(1)
             return
-
-
         try:
             delete = int(delete)
 
@@ -44,20 +36,24 @@ def delete_expense(expenses, pr, le, save_expenses, view_expenses):
                 print("That expense number does not exist.")
                 continue
 
-            del expenses[delete - 1]
-
-            save_expenses()
-
-            break
+            answer = input("Do you want to continue with your delete? Y/N: .")
+            if answer == "y":
+                del expenses[delete - 1]
+                save_expenses(expenses)
+                break
+            elif answer == "n":
+                block = True
+                continue
+            else:
+                print("Invalid input.")
+                break
 
         except ValueError:
             print("Please enter a number.")
 
     print("Expense deleted successfully.")
     print("Available expenses.")
-    view_expenses(expenses, le, pr)
-
-    input("Press enter to continue.")
+    view_expenses(expenses)
     subprocess.run(["clear"])
     time.sleep(1)
 

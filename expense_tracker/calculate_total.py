@@ -1,5 +1,4 @@
-import subprocess
-import time
+from packages import *
 
 def calculate_total(expenses):
 
@@ -12,7 +11,7 @@ def calculate_total(expenses):
     print(f"=====Total spending=====\n"
           f"₦{(total):>5,.2f}"
           )
-    input("Press enter to continue.")
+    input("Press enter to return options.")
     subprocess.run(["clear"])
     time.sleep(1)
 

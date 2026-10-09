@@ -1,6 +1,4 @@
-import subprocess
-import string
-import time
+from packages import *
 
 def ispunctuation(word):
     punctuations = string.punctuation
@@ -10,7 +8,7 @@ def ispunctuation(word):
 
 
 block = False
-def add_expense(expenses, save_expenses, view_expenses, le, something):
+def add_expense(expenses):
     while True:
         category = input(
             "What category of expense do you want to add (or type 'back' to cancel): "
@@ -77,7 +75,7 @@ def add_expense(expenses, save_expenses, view_expenses, le, something):
         "description": description
     })
 
-    save_expenses()
+    save_expenses(expenses)
 
     while True:
         view = input(
@@ -85,26 +83,24 @@ def add_expense(expenses, save_expenses, view_expenses, le, something):
             "Do you want to view your expenses? Y/N: "
         ).strip().lower()
 
-        if view == "":
-            print("Space can't be empty.")
-            continue
-
-        elif view == "y":
-            print("All expenses:")
-            view_expenses(expenses, le, something)
-            return
-
-        elif view == "n":
-            block = True
-            break
-
-        else:
-            print("Invalid input.")
+        match view:
+            case "":
+                print("Space can't be empty.")
+                continue
+            case"y":
+                print("All expenses:")
+                view_expenses(expenses)
+                return
+            case"n":
+                block = True
+                break
+            case _:
+                print("Invalid input.")
 
     if block == True:
         subprocess.run(["clear"])
         return
     else:
-        input("Press enter to continue.")
+        input("Press enter to return options.")
         subprocess.run(["clear"])
         time.sleep(1)
