@@ -5,9 +5,9 @@ import json
 import sys
 
 
+from table_length import print_header
 from table_length import print_header_line
 from exit_program import exit_program
-from table_length import print_header
 from save_expense import save_expenses
 from load_expense import load_expenses
 from view_expenses import view_expenses

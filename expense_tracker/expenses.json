@@ -1,0 +1,27 @@
+[
+    {
+        "amount": 3500.0,
+        "category": "food",
+        "description": "rice"
+    },
+    {
+        "amount": 450000.0,
+        "category": "shelter",
+        "description": "two bedroom"
+    },
+    {
+        "amount": 4567.0,
+        "category": "nsmds",
+        "description": "rfytu"
+    },
+    {
+        "amount": 12.0,
+        "category": "hsq",
+        "description": "sq"
+    },
+    {
+        "amount": 234.0,
+        "category": "swq",
+        "description": "wqwq"
+    }
+]

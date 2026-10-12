@@ -100,7 +100,3 @@ def add_expense(expenses):
     if block == True:
         subprocess.run(["clear"])
         return
-    else:
-        input("Press enter to return options.")
-        subprocess.run(["clear"])
-        time.sleep(1)

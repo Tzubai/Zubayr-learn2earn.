@@ -6,9 +6,9 @@ def view_expenses(expenses):
         print("No expenses recorded yet.")
         return
 
-    print_header_line()
-    print_header()
-    print_header_line()
+    print(print_header_line())
+    print(print_header())
+    print(print_header_line())
 
     for i, expense in enumerate(expenses, start=1):
         print(
@@ -18,7 +18,7 @@ def view_expenses(expenses):
             f"{expense['description']:<20}"
         )
 
-    print_header_line()
+    print(print_header_line())
 
     input("Press enter to continue.")
     subprocess.run(["clear"])

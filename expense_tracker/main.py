@@ -4,13 +4,15 @@ def main():
     try:
         expenses = load_expenses()
 
-        pr = (
-                f"{'Index':<20}"
-                f"{'Amount':<20}"
-                f"{'Category':<20}"
-                f"{'Description':<20}"
-            )
-        le = len(pr)
+        # pr = (
+        #         f"{'Index':<20}"
+        #         f"{'Amount':<20}"
+        #         f"{'Category':<20}"
+        #         f"{'Description':<20}"
+        #     )
+        # le = len(pr)
+        print_header_line()
+        print_header()
 
         while True:
 
@@ -46,7 +48,7 @@ def main():
                 case 1:
                     add_expense(expenses)
                 case 2:
-                    view_expenses(expenses, )
+                    view_expenses(expenses)
                 case 3:
                     calculate_total(expenses)
                 case 4:
